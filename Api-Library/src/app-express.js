@@ -1,5 +1,6 @@
 import Express  from "express";
 import Connection from "./Data/Data.js";
+import Books from "./Models/BookModel.js";
 
 const app = Express();
 app.use(Express.json());
@@ -15,30 +16,12 @@ connection.once("open", () =>
     console.log("Conexão realizada com susesso");
 });
 
-const Livros = 
-[
-    {
-        "Id" : 1,
-        "Livro" : "Harry Poter"
-    },
-    {
-        "Id" : 2,
-        "Livro" : "Pc Gamer"
-    }
 
-];
 
-function GetId(id)
-{
-    return Livros.findIndex(Livros => 
-        {
-            return Livros.Id === Number(id);
-        });
-}
-
-app.get("/livros" ,(req,res) =>
-{
-    res.status(200).json(Livros);
+app.get("/livros" ,async (req,res) =>
+{   
+    const Listbooks = await Books.find({}); 
+    res.status(200).json(Listbooks);
 });
 
 app.get("/", (req,res) =>
