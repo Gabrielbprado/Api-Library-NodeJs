@@ -1,7 +1,19 @@
 import Express  from "express";
+import Connection from "./Data/Data.js";
 
 const app = Express();
 app.use(Express.json());
+
+const connection = await Connection();
+connection.on("error",(error) =>
+{
+    console.error("Ocorreu um Erro",error);
+});
+
+connection.once("open", () =>
+{
+    console.log("Conexão realizada com susesso");
+});
 
 const Livros = 
 [
@@ -69,3 +81,4 @@ app.delete("/livros/:id" ,(req,res) =>
 });
 
 export default app;
+
