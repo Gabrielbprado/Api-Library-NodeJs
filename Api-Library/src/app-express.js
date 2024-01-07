@@ -1,8 +1,10 @@
 import Express  from "express";
 import Connection from "./Data/Data.js";
-import Books from "./Models/BookModel.js";
+import routes from './Routes/index.js'
+
 
 const app = Express();
+routes(app);
 app.use(Express.json());
 
 const connection = await Connection();
@@ -18,30 +20,10 @@ connection.once("open", () =>
 
 
 
-app.get("/livros" ,async (req,res) =>
-{   
-    const Listbooks = await Books.find({}); 
-    res.status(200).json(Listbooks);
-});
 
-app.get("/", (req,res) =>
-{
-    res.status(200).send("Raiz do Projeto");
-});
 
-app.post("/livros",(req,res) =>
-{
-    Livros.push(req.body);
-    res.status(201).send("Livro Cadastrado");
-});
 
-app.get("/livros/:id" ,(req,res) => 
-{
-    const id = GetId(req.params.id);
-   
-        res.status(200).json(Livros[id]);
-  
-});
+
 
 app.put("/livros/:id", (req,res) =>
 {
