@@ -1,10 +1,11 @@
 import Express from "express";
-import Books from './Route.js';
+import Books from './LivroRoute.js';
+import Autor from './AutorRoute.js';
 
 const routes = (app) =>
 {
     app.route("/").get((req,res) => res.status(200).send("Programa Iniciado"));
-    app.use(Express.json(),Books);
+    app.use(Express.json(),Books,Autor);
 
 }
 
