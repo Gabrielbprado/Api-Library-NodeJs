@@ -16,5 +16,8 @@
     "mongoose": "^8.0.3",
     "mongose": "^0.0.2-security",
     "nodemon": "^3.0.2"
+  },
+  "devDependencies": {
+    "eslint": "^8.56.0"
   }
 }
