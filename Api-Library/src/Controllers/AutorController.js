@@ -1,3 +1,4 @@
+
 import { Autor } from "../Models/AutorModel.js";
 
 class AutorController
@@ -8,7 +9,7 @@ class AutorController
     res.status(200).json(ListAutor);
   }
 
-  static async PostAutor (req,res)
+  static async PostAutor (req,res,next)
   {
     try
     {
@@ -16,39 +17,48 @@ class AutorController
       res.status(201).json({message : "Autor Criado Com Sucesso", Autor : NewAutor});
     }catch (error)
     {
-      res.status(500).json({message : "Ocorreu um erro", Erro : error});
+      next(error);
     }
   }
 
-  static async GetAutorId (req,res)
+  static async GetAutorId (req,res,next)
   {
     try
     {
       const id = req.params.id;
       const autor = await Autor.findById(id);
-      res.status(200).json(autor);
+      if(autor !== null)
+      {
+        res.status(200).json(autor);
+      }else
+      {
+        res.status(404).json({message : "Id Não Encontrado"});
+      }
+     
     }catch (erro)
     {
-      res.status(400).json({message: "Ocorreu um Erro Verifique se o Id esta Correto"},erro);
+      next(erro);
     }
   }
 
-  static async PutAutor (req,res)
+  static async PutAutor(req,res,next)
   {
+  
     try
     {
       const id = req.params.id;
+      
       await Autor.findByIdAndUpdate(id,req.body);
       res.status(201).json({message : "Autor Atualizado"});
     }catch (erro)
     {
-      res.status(400).json({message: "Ocorreu um Erro Verifique se o Id esta Correto"},erro);
+      next(erro);
  
     }
 
   }
 
-  static async DeleteAutor (req,res)
+  static async DeleteAutor (req,res,next)
   {
     try
     {   
@@ -57,11 +67,12 @@ class AutorController
       res.status(201).json({message : "Autor Excluido"});
     }catch (erro)
     {
-      res.status(400).json({message: "Ocorreu um Erro Verifique se o Id esta Correto"},erro);
-
+      next(erro);
     }
   }
 
 }
+
+
 
 export default AutorController;

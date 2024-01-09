@@ -3,13 +3,19 @@ import { Autor } from "../Models/AutorModel.js";
 
 class BookController
 {
-  static async GetBook (req,res)
+  static async GetBook (req,res,next)
   {
-    const Listbooks = await Books.find({}); 
-    res.status(200).json(Listbooks);
+    try
+    {
+      const Listbooks = await Books.find({}); 
+      res.status(200).json(Listbooks);
+    } catch (error)
+    {
+      next(error);
+    }
   }
 
-  static async PostBook (req,res)
+  static async PostBook (req,res,next)
   {   
     const newBook = req.body;
     try
@@ -21,24 +27,29 @@ class BookController
       res.status(201).json({message : "Livro Criado Com Sucesso", Livro : book});
     }catch (error)
     {
-      res.status(500).json({message : "Ocorreu um erro", Erro : error});
-    }
+      next(error);    }
   }
 
-  static async GetBookId (req,res)
+  static async GetBookId (req,res,next)
   {
     try
     {
       const id = req.params.id;
       const Book = await Books.findById(id);
-      res.status(200).json(Book);
+      if(Book !== null)
+      {
+        res.status(200).json(Book);
+      }else
+      {
+        res.status(404).json({message : "Id Não Encontrado"});
+      }
+    
     }catch (erro)
     {
-      res.status(400).json({message: "Ocorreu um Erro Verifique se o Id esta Correto"},erro);
-    }
+      next(erro);    }
   }
 
-  static async PutBook (req,res)
+  static async PutBook (req,res,next)
   {
     try
     {
@@ -47,13 +58,12 @@ class BookController
       res.status(201).json({message : "Livro Atualizado"});
     }catch (erro)
     {
-      res.status(400).json({message: "Ocorreu um Erro Verifique se o Id esta Correto"},erro);
- 
+      next(erro); 
     }
 
   }
 
-  static async SearchPublisher(req,res)
+  static async SearchPublisher(req,res,next)
   {
     try
     {
@@ -63,12 +73,11 @@ class BookController
     }
     catch (error)
     {
-      res.status(404).json({message : "Ocorreu um Erro ao Procurar o Livro"});
-    }
+      next(error);    }
 
   }
 
-  static async DeleteBook (req,res)
+  static async DeleteBook (req,res,next)
   {
     try
     {
@@ -77,8 +86,7 @@ class BookController
       res.status(201).json({message : "Livro Excluido"});
     }catch (erro)
     {
-      res.status(400).json({message: "Ocorreu um Erro Verifique se o Id esta Correto"},erro);
-
+      next(erro);
     }
   }
 
