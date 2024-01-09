@@ -15,7 +15,7 @@ class BookController
         try
         {
             
-        const autorEncontrado = Autor.findById(newBook.Autor);
+        const autorEncontrado = await Autor.findById(newBook.Autor);
         const BookCompleto = { ...newBook, Autor: { ...autorEncontrado._doc}}
             const book = await Books.create(BookCompleto);
         res.status(201).json({message : "Livro Criado Com Sucesso", Livro : book});
@@ -58,7 +58,7 @@ class BookController
         try
         {
         const Publisher = req.query.editora;
-        const book = Books.find({editora : Publisher});
+        const book = await Books.find({editora : Publisher});
         res.status(200).json(book);
         }
         catch (error)

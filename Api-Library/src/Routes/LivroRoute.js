@@ -4,6 +4,7 @@ import BookController from "../Controllers/BookController.js";
 const Routers = Express.Router();
 
 Routers.get("/livros",BookController.GetBook);
+Routers.get("/livros/Search",BookController.SearchPublisher);
 Routers.post("/livros",BookController.PostBook);
 Routers.get("/livros/:id",BookController.GetBookId);
 Routers.put("/livros/:id",BookController.PutBook);

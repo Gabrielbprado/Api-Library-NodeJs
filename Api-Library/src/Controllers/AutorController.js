@@ -25,8 +25,8 @@ class AutorController
         try
         {
         const id = req.params.id;
-        const Autor = await Autor.findById(id);
-        res.status(200).json(Autor);
+        const autor = await Autor.findById(id);
+        res.status(200).json(autor);
         }catch (erro)
         {
             res.status(400).json({message: "Ocorreu um Erro Verifique se o Id esta Correto"},erro);

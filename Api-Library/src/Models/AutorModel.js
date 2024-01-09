@@ -3,7 +3,7 @@ import mongoose from 'mongoose';
 const AutorSchema = new mongoose.Schema({
 
     Id : { type : mongoose.Types.ObjectId},
-    Name : { type : String, require : true},
+    Name : { type : String, required : true},
     Nacionalidade : { type : String}
 }, {versionKey : false});
 
