@@ -53,6 +53,21 @@ class BookController
 
     }
 
+    static async SearchPublisher(req,res)
+    {
+        try
+        {
+        const Publisher = req.query.editora;
+        const book = Books.find({editora : Publisher});
+        res.status(200).json(book);
+        }
+        catch (error)
+        {
+            res.status(404).json({message : "Ocorreu um Erro ao Procurar o Livro"});
+        }
+
+    }
+
     static async DeleteBook (req,res)
     {
         try
